@@ -11,11 +11,18 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          firebase: ['firebase'],
           router: ['react-router-dom']
         }
       }
     }
+  },
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  },
+  optimizeDeps: {
+    include: ['firebase/app', 'firebase/auth', 'firebase/firestore']
   },
   server: {
     port: 3000,
