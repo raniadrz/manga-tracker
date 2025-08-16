@@ -18,104 +18,7 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
-.header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: 700;
-  font-size: 1.25rem;
-}
-
-.logo h1 {
-  font-size: 1.25rem;
-}
-
-.logo:hover {
-  color: #667eea;
-}
-
-.nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #666;
-  font-weight: 500;
-  transition: color 0.2s;
-  font-size: 0.9rem;
-}
-
-.nav-link:hover {
-  color: #667eea;
-}
-
-/* User section in header */
-.user-section {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #666;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.username {
-  color: #333;
-  font-weight: 600;
-}
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #ff4757;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.logout-btn:hover {
-  background: #ff3742;
-  transform: translateY(-1px);
-}
 
 /* Login page styles */
 .login-container {
@@ -331,6 +234,128 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - 80px);
+  padding-top: 2rem;
+}
+
+/* When sidebar is collapsed */
+.App.sidebar-collapsed .main-content {
+  margin-left: 80px;
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .main-content {
+    margin-left: 0;
+    padding-top: 90px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .App.sidebar-collapsed .main-content {
+    margin-left: 0;
+  }
+  
+  /* Mobile page adjustments */
+  .add-manga-page,
+  .home-page {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .page-header p {
+    font-size: 1rem;
+  }
+  
+  .form-container,
+  .manga-list-container {
+    padding: 1rem;
+  }
+  
+  /* Mobile form improvements */
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.875rem;
+  }
+  
+  /* Mobile button improvements */
+  button {
+    min-height: 44px; /* Touch-friendly button size */
+    min-width: 44px;
+  }
+  
+  /* Mobile card improvements */
+  .manga-card {
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  
+  /* Mobile navigation improvements */
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .main-content {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .add-manga-page,
+  .home-page {
+    padding: 0.5rem;
+  }
+  
+  .page-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .form-container,
+  .manga-list-container {
+    padding: 0.75rem;
+  }
+}
+
+/* Mobile touch improvements */
+@media (max-width: 767px) {
+  /* Prevent text selection on mobile */
+  .nav-link,
+  button,
+  .collection-item {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Improve touch scrolling */
+  .main-content {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+  
+  /* Better mobile spacing */
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Mobile form spacing */
+  .form-field {
+    margin-bottom: 1rem;
+  }
 }
 
 /* Loading state */
@@ -338,9 +363,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
   font-size: 1.2rem;
   color: white;
+}
+
+/* Loading page - full screen centered */
+.loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  z-index: 9999;
 }
 
 /* Loading spinner animations */
@@ -868,18 +909,7 @@ body {
     width: 100%;
   }
   
-  /* Mobile authentication styles */
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .nav {
-    order: 2;
-    width: 100%;
-    justify-content: center;
-  }
+
   
   .user-section {
     order: 3;
@@ -1434,5 +1464,113 @@ body {
   .login-toggle:active {
     transform: none;
   }
+}
+
+/* Loading Spinner */
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* ThreeDot Animation */
+.three-dot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.three-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: var(--dot-size, 32px);
+  height: var(--dot-size, 32px);
+  background-color: var(--dot-color, #f91dbb);
+  border-radius: 50%;
+  animation: pulsate 1.4s ease-in-out infinite both;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes pulsate {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading-text {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}
+
+/* Add Manga Page */
+.add-manga-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.form-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Home Page */
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.manga-list-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 

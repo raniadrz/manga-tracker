@@ -11,13 +11,18 @@ import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import MangaList from './components/MangaList';
 import AddMangaForm from './components/AddMangaForm';
+import AddMangaPage from './components/AddMangaPage';
+import HomePage from './components/HomePage';
 import MangaDetail from './components/MangaDetail';
+import MangaDetailPage from './components/MangaDetailPage';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
   const [mangas, setMangas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   // Fetch mangas from Firestore
   useEffect(() => {
@@ -27,11 +32,22 @@ function App() {
         ...doc.data()
       }));
       setMangas(mangaList);
-      setLoading(false);
+      setDataLoaded(true);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Minimum loading time effect
+  useEffect(() => {
+    if (dataLoaded) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1000); // Show loading for at least 2 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [dataLoaded]);
 
   // Add new manga
   const addManga = async (mangaData) => {
@@ -69,7 +85,11 @@ function App() {
   };
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading-page">
+        <LoadingSpinner size="large" text="Loading Manga Tracker..." />
+      </div>
+    );
   }
 
   return (
@@ -85,12 +105,24 @@ function App() {
                   <>
                     <Header />
                     <main className="main-content">
-                      <AddMangaForm onAddManga={addManga} />
-                      <MangaList 
-                        mangas={mangas} 
+                      <HomePage 
+                        mangas={mangas}
                         onUpdateManga={updateManga}
                         onDeleteManga={deleteManga}
                       />
+                    </main>
+                  </>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/add-manga" 
+              element={
+                <ProtectedRoute>
+                  <>
+                    <Header />
+                    <main className="main-content">
+                      <AddMangaPage onAddManga={addManga} />
                     </main>
                   </>
                 </ProtectedRoute>
@@ -103,7 +135,7 @@ function App() {
                   <>
                     <Header />
                     <main className="main-content">
-                      <MangaDetail 
+                      <MangaDetailPage 
                         mangas={mangas}
                         onUpdateManga={updateManga}
                         onDeleteManga={deleteManga}

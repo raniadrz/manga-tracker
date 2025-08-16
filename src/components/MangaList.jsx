@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Edit, Trash2, Eye, Plus, Minus, Filter, BookOpen } from 'lucide-react';
+import './MangaList.css';
 
 function MangaList({ mangas, onUpdateManga, onDeleteManga }) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Get unique categories and statuses
   const categories = [...new Set(mangas.map(manga => manga.category))];
   const statuses = [...new Set(mangas.map(manga => manga.status || 'reading'))];
 
-  // Filter mangas based on search, category, and status
   const filteredMangas = mangas.filter(manga => {
     const matchesSearch = manga.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === '' || manga.category === selectedCategory;
@@ -106,7 +105,7 @@ function MangaList({ mangas, onUpdateManga, onDeleteManga }) {
                   }}
                 />
               ) : null}
-              <div className="cover-placeholder" style={{ display: manga.coverImageUrl ? 'none' : 'block' }}>
+              <div className="cover-placeholder">
                 <span>📚</span>
               </div>
             </div>
@@ -178,4 +177,4 @@ function MangaList({ mangas, onUpdateManga, onDeleteManga }) {
   );
 }
 
-export default MangaList; 
+export default MangaList;
